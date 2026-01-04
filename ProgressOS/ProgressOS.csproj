@@ -8,4 +8,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ProgressOS.Application\ProgressOS.Application.csproj" />
+    <ProjectReference Include="..\ProgressOS.Core\ProgressOS.Core.csproj" />
+    <ProjectReference Include="..\ProgressOS.DataAccess.Sqlite\ProgressOS.DataAccess.Sqlite.csproj" />
+  </ItemGroup>
+
 </Project>

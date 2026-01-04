@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ProgressOS.Core\ProgressOS.Core.csproj" />
+    <ProjectReference Include="..\ProgressOS.DataAccess.Sqlite\ProgressOS.DataAccess.Sqlite.csproj" />
+  </ItemGroup>
+
 </Project>
