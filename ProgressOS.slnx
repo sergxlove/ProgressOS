@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ProgressOS.Application/ProgressOS.Application.csproj" Id="be7f073c-8aa8-4165-8be5-d31735655a07" />
+  <Project Path="ProgressOS.Core/ProgressOS.Core.csproj" Id="1bb36e76-0e82-4dc5-8b5e-52111d8a6bfd" />
+  <Project Path="ProgressOS.DataAccess.Sqlite/ProgressOS.DataAccess.Sqlite.csproj" Id="711e1045-9028-4b16-bd07-91a3981f163e" />
+  <Project Path="ProgressOS/ProgressOS.csproj" />
+</Solution>
