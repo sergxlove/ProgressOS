@@ -22,8 +22,8 @@ namespace ProgressOS.Core.Services
             _hashSize = 32;
             _ivSize = 16;
             _masterPassword = masterPassword;
-            _salt = GenerateRandomSalt();
-            _iv = GenerateRandomIV();
+            _salt = ReadSaltFromFile();
+            _iv = ReadIVFromFile();
             _key = GenerateKey(_masterPassword, _salt);
         }
 
@@ -35,8 +35,8 @@ namespace ProgressOS.Core.Services
             _hashSize = hashSize;
             _ivSize = ivSize;
             _masterPassword = masterPassword;
-            _salt = GenerateRandomSalt();
-            _iv = GenerateRandomIV();
+            _salt = ReadSaltFromFile();
+            _iv = ReadIVFromFile();
             _key = GenerateKey(_masterPassword, _salt);
         }
 
@@ -73,6 +73,42 @@ namespace ProgressOS.Core.Services
                 responce.IsFailed = true;
             }
             return responce;
+        }
+
+        private byte[] ReadSaltFromFile()
+        {
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "salt.txt");
+            string saltText;
+            if (File.Exists(filePath))
+            {
+                string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
+                saltText = File.ReadAllText(filePath, Encoding.UTF8);
+                return Convert.FromBase64String(saltText);
+            }
+            else
+            {
+                byte[] saltBytes = GenerateRandomSalt();
+                File.WriteAllText(filePath, Convert.ToBase64String(saltBytes));
+                return saltBytes;
+            }
+        }
+
+        private byte[] ReadIVFromFile()
+        {
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "iv.txt");
+            string ivText;
+            if (File.Exists(filePath))
+            {
+                string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
+                ivText = File.ReadAllText(filePath, Encoding.UTF8);
+                return Convert.FromBase64String(ivText);
+            }
+            else
+            {
+                byte[] ivBytes = GenerateRandomIV();
+                File.WriteAllText(filePath, Convert.ToBase64String(ivBytes));
+                return ivBytes;
+            }
         }
 
         private byte[] GenerateRandomSalt()
