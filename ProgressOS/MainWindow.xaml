@@ -5,8 +5,405 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProgressOS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="ProgresOS" 
+        Height="900" 
+        Width="1400"
+        WindowStartupLocation="CenterScreen"
+        Background="#0A0A0A"
+        FontFamily="Segoe UI"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowState="Normal">
+
+    <Window.Resources>
+        <Color x:Key="PrimaryColor">#6C5CE7</Color>
+        <Color x:Key="PrimaryLightColor">#8B7CFF</Color>
+        <Color x:Key="SecondaryColor">#00B894</Color>
+        <Color x:Key="AccentColor">#FF7676</Color>
+        <Color x:Key="BackgroundColor">#0A0A0A</Color>
+        <Color x:Key="SurfaceColor">#1E1E1E</Color>
+        <Color x:Key="CardColor">#2D2D2D</Color>
+        <Color x:Key="TextPrimaryColor">#FFFFFF</Color>
+        <Color x:Key="TextSecondaryColor">#B0B0B0</Color>
+
+        <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
+        <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLightColor}"/>
+        <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SecondaryColor}"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}"/>
+        <SolidColorBrush x:Key="CardBrush" Color="{StaticResource CardColor}"/>
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}"/>
+
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="Margin" Value="8,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="12"
+                                Padding="16,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ContentPresenter x:Name="IconContent" 
+                                                Grid.Column="0"
+                                                Width="24" 
+                                                Height="24"
+                                                Margin="0,0,12,0"
+                                                VerticalAlignment="Center"/>
+
+                                <TextBlock Grid.Column="1" 
+                                         Text="{TemplateBinding Content}" 
+                                         VerticalAlignment="Center"
+                                         Foreground="{TemplateBinding Foreground}"
+                                         FontSize="15"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#33FFFFFF"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#4DFFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ActiveNavButtonStyle" TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" 
+                        Direction="270"
+                        ShadowDepth="4"
+                        BlurRadius="12"
+                        Opacity="0.25"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WindowButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="48"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#33FFFFFF"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource WindowButtonStyle}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ProgressBarStyle" TargetType="ProgressBar">
+            <Setter Property="Height" Value="6"/>
+            <Setter Property="Background" Value="#3A3A3A"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Grid>
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="3"/>
+                            <Border x:Name="PART_Track" 
+                                    Background="{TemplateBinding Foreground}" 
+                                    CornerRadius="3"
+                                    HorizontalAlignment="Left"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Rectangle>
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#0A0A0A" Offset="0"/>
+                    <GradientStop Color="#151515" Offset="0.5"/>
+                    <GradientStop Color="#1A1A1A" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" 
+                    Background="Transparent"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="8,0">
+                        <Border Background="{StaticResource PrimaryBrush}" 
+                                Width="28" 
+                                Height="28" 
+                                CornerRadius="8">
+                            <TextBlock Text="P" 
+                                     Foreground="White" 
+                                     FontSize="18" 
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="ProgresOS" 
+                                 Foreground="White" 
+                                 FontSize="18" 
+                                 FontWeight="SemiBold"
+                                 Margin="10,0,0,0"
+                                 VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button x:Name="MinimizeButton" 
+                               Style="{StaticResource WindowButtonStyle}" 
+                               Content="─"
+                               Click="MinimizeButton_Click"/>
+                        <Button x:Name="MaximizeButton" 
+                               Style="{StaticResource WindowButtonStyle}" 
+                               Content="□"
+                               Click="MaximizeButton_Click"/>
+                        <Button x:Name="CloseButton" 
+                               Style="{StaticResource CloseButtonStyle}" 
+                               Content="✕"
+                               Click="CloseButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1" Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" 
+                        Background="{StaticResource SurfaceBrush}" 
+                        CornerRadius="24"
+                        Margin="0,0,15,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" 
+                                Background="{StaticResource CardBrush}"
+                                CornerRadius="24 24 0 0"
+                                Padding="20">
+                            <StackPanel>
+                                <Border Width="100" 
+                                        Height="100" 
+                                        CornerRadius="30"
+                                        Background="{StaticResource PrimaryBrush}"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,10,0,15">
+                                    <Border CornerRadius="28" 
+                                            Background="{StaticResource SurfaceBrush}"
+                                            Margin="3">
+                                        <TextBlock Text="👤" 
+                                                 FontSize="40" 
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                                    </Border>
+                                </Border>
+
+                                <TextBlock x:Name="UserNameText" 
+                                         Text="Александр" 
+                                         Foreground="{StaticResource TextPrimaryBrush}" 
+                                         FontSize="20" 
+                                         FontWeight="SemiBold"
+                                         HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="UserNicknameText" 
+                                         Text="@alex_dev" 
+                                         Foreground="{StaticResource TextSecondaryBrush}" 
+                                         FontSize="14"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,4,0,0"/>
+
+                                <Border Background="#2A2A2A"
+                                        CornerRadius="20"
+                                        Padding="12,6"
+                                        Margin="0,15,0,0">
+                                    <StackPanel Orientation="Horizontal" 
+                                                HorizontalAlignment="Center">
+                                        <Ellipse Width="8" 
+                                                Height="8" 
+                                                Fill="{StaticResource SecondaryBrush}"
+                                                Margin="0,0,8,0"
+                                                VerticalAlignment="Center"/>
+                                        <TextBlock Text="Активен" 
+                                                 Foreground="{StaticResource TextSecondaryBrush}"
+                                                 FontSize="12"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" 
+                                     VerticalScrollBarVisibility="Auto"
+                                     Margin="0,20,0,0">
+                            <StackPanel>
+                                <TextBlock Text="МЕНЮ" 
+                                         Foreground="{StaticResource TextSecondaryBrush}" 
+                                         FontSize="11" 
+                                         FontWeight="Bold"
+                                         Margin="20,0,0,10"/>
+
+                                <Button x:Name="HomeButton" 
+                                       Style="{StaticResource ActiveNavButtonStyle}"
+                                       Content="Главная"
+                                       Tag="Home"
+                                       Click="NavigateButton_Click">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="🏠" FontSize="20"/>
+                                                <TextBlock Text="{Binding}" Margin="12,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+
+                                <Button x:Name="DailyGoalsButton" 
+                                       Style="{StaticResource NavButtonStyle}"
+                                       Content="Ежедневные цели"
+                                       Tag="Daily"
+                                       Click="NavigateButton_Click">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="📅" FontSize="20"/>
+                                                <TextBlock Text="{Binding}" Margin="12,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+
+                                <Button x:Name="YearlyGoalsButton" 
+                                       Style="{StaticResource NavButtonStyle}"
+                                       Content="Годовые цели"
+                                       Tag="Yearly"
+                                       Click="NavigateButton_Click">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="🎯" FontSize="20"/>
+                                                <TextBlock Text="{Binding}" Margin="12,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+
+                                <Button x:Name="SettingsButton" 
+                                       Style="{StaticResource NavButtonStyle}"
+                                       Content="Настройки"
+                                       Tag="Settings"
+                                       Click="NavigateButton_Click">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="⚙️" FontSize="20"/>
+                                                <TextBlock Text="{Binding}" Margin="12,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+
+                                <Rectangle Height="1" 
+                                         Fill="#2A2A2A" 
+                                         Margin="20,20"/>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <Border Grid.Row="2" 
+                                Background="{StaticResource CardBrush}"
+                                CornerRadius="0 0 24 24"
+                                Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="Версия 1.0.0" 
+                                         Foreground="{StaticResource TextSecondaryBrush}"
+                                         FontSize="11"
+                                         HorizontalAlignment="Center"/>
+                                <TextBlock Text="© 2024 ProgresOS" 
+                                         Foreground="{StaticResource TextSecondaryBrush}"
+                                         FontSize="11"
+                                         HorizontalAlignment="Center"
+                                         Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="1" 
+                        Background="{StaticResource SurfaceBrush}" 
+                        CornerRadius="24"
+                        Padding="25">
+                    <Grid x:Name="PageContainer"/>
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
