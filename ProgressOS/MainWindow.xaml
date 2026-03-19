@@ -313,10 +313,10 @@
                                          Margin="20,0,0,10"/>
 
                                 <Button x:Name="HomeButton" 
-                                       Style="{StaticResource ActiveNavButtonStyle}"
+                                       Style="{StaticResource NavButtonStyle}"
                                        Content="Главная"
                                        Tag="Home"
-                                       Click="NavigateButton_Click">
+                                       Click="NavigateMain_Click">
                                     <Button.ContentTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -331,7 +331,7 @@
                                        Style="{StaticResource NavButtonStyle}"
                                        Content="Ежедневные цели"
                                        Tag="Daily"
-                                       Click="NavigateButton_Click">
+                                       Click="NavigateDaysGoals_Click">
                                     <Button.ContentTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -346,7 +346,7 @@
                                        Style="{StaticResource NavButtonStyle}"
                                        Content="Годовые цели"
                                        Tag="Yearly"
-                                       Click="NavigateButton_Click">
+                                       Click="NavigateYearsGoals_Click">
                                     <Button.ContentTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -361,7 +361,7 @@
                                        Style="{StaticResource NavButtonStyle}"
                                        Content="Настройки"
                                        Tag="Settings"
-                                       Click="NavigateButton_Click">
+                                       Click="NavigateSettings_Click">
                                     <Button.ContentTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -387,7 +387,7 @@
                                          Foreground="{StaticResource TextSecondaryBrush}"
                                          FontSize="11"
                                          HorizontalAlignment="Center"/>
-                                <TextBlock Text="© 2024 ProgresOS" 
+                                <TextBlock Text="© 2026 ProgresOS. developer sergxlove" 
                                          Foreground="{StaticResource TextSecondaryBrush}"
                                          FontSize="11"
                                          HorizontalAlignment="Center"
@@ -397,12 +397,38 @@
                     </Grid>
                 </Border>
 
-                <Border Grid.Column="1" 
-                        Background="{StaticResource SurfaceBrush}" 
-                        CornerRadius="24"
-                        Padding="25">
-                    <Grid x:Name="PageContainer"/>
-                </Border>
+                <Grid Grid.Column="1" Margin="0,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <ContentControl x:Name="PageControl"
+                        Grid.Row="1"
+                        Background="{StaticResource SurfaceBrush}"
+                        Padding="25"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch">
+
+                        <ContentControl.Content>
+                            <Grid>
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="🏠" 
+                                        FontSize="48" 
+                                        Foreground="{StaticResource TextSecondaryBrush}"
+                                        HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Выберите раздел в навигации" 
+                                        Foreground="{StaticResource TextSecondaryBrush}"
+                                        FontSize="16"
+                                        Margin="0,20,0,0"
+                                        HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </ContentControl.Content>
+                    </ContentControl>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
