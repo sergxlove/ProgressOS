@@ -12,13 +12,11 @@
                   HorizontalScrollBarVisibility="Disabled"
                   PanningMode="VerticalOnly">
         <StackPanel Margin="0,0,20,20">
-            <!-- Верхняя панель с приветствием и датой -->
             <Grid Margin="0,0,0,30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-
                 <StackPanel Grid.Column="0">
                     <TextBlock x:Name="GreetingText" 
                              Text="Доброе утро, Александр! 👋" 
@@ -30,7 +28,6 @@
                              FontSize="14"
                              Margin="0,5,0,0"/>
                 </StackPanel>
-
                 <Border Grid.Column="1"
                         Background="{StaticResource CardBrush}"
                         CornerRadius="16"
@@ -51,8 +48,6 @@
                     </StackPanel>
                 </Border>
             </Grid>
-
-            <!-- Основные метрики в реальном времени -->
             <Grid Margin="0,0,0,30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -60,8 +55,6 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <!-- Метрика: Всего целей -->
                 <Border Grid.Column="0"
                         Style="{StaticResource CardStyle}"
                         Background="{StaticResource CardBrush}"
@@ -100,8 +93,6 @@
                         </StackPanel>
                     </StackPanel>
                 </Border>
-
-                <!-- Метрика: В процессе -->
                 <Border Grid.Column="1"
                         Style="{StaticResource CardStyle}"
                         Background="{StaticResource CardBrush}"
@@ -126,8 +117,6 @@
                                    Margin="0,8,0,0"/>
                     </StackPanel>
                 </Border>
-
-                <!-- Метрика: Выполнено -->
                 <Border Grid.Column="2"
                         Style="{StaticResource CardStyle}"
                         Background="{StaticResource CardBrush}"
@@ -151,8 +140,6 @@
                                  Margin="0,5,0,0"/>
                     </StackPanel>
                 </Border>
-
-                <!-- Метрика: Средний прогресс -->
                 <Border Grid.Column="3"
                         Style="{StaticResource CardStyle}"
                         Background="{StaticResource CardBrush}"
@@ -177,8 +164,6 @@
                     </StackPanel>
                 </Border>
             </Grid>
-
-            <!-- Список активных целей -->
             <Border Style="{StaticResource CardStyle}" 
                     Background="{StaticResource CardBrush}"
                     Margin="0,0,0,25"
@@ -202,8 +187,6 @@
                                      FontWeight="Bold"/>
                         </Border>
                     </StackPanel>
-
-                    <!-- Список активных целей -->
                     <ItemsControl x:Name="ActiveGoalsList">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -221,8 +204,6 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-
-                                        <!-- Иконка типа цели -->
                                         <Border Grid.Column="0"
                                                 Width="40"
                                                 Height="40"
@@ -234,8 +215,6 @@
                                                      HorizontalAlignment="Center"
                                                      VerticalAlignment="Center"/>
                                         </Border>
-
-                                        <!-- Информация о цели -->
                                         <StackPanel Grid.Column="1"
                                                   Grid.Row="0"
                                                   VerticalAlignment="Center">
@@ -263,8 +242,6 @@
                                                          VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </StackPanel>
-
-                                        <!-- Прогресс -->
                                         <StackPanel Grid.Column="2"
                                                   Grid.Row="0"
                                                   HorizontalAlignment="Right">
@@ -277,8 +254,6 @@
                                                      Foreground="{StaticResource TextSecondaryBrush}" 
                                                      FontSize="10"/>
                                         </StackPanel>
-
-                                        <!-- Прогресс бар -->
                                         <Grid Grid.Column="1"
                                               Grid.ColumnSpan="2"
                                               Grid.Row="1"
@@ -293,8 +268,6 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-                    <!-- Сообщение, если нет активных целей -->
                     <TextBlock x:Name="NoActiveGoalsMessage" 
                              Text="Нет активных целей. Создайте свою первую цель!" 
                              Foreground="{StaticResource TextSecondaryBrush}"
@@ -304,8 +277,6 @@
                              Visibility="Collapsed"/>
                 </StackPanel>
             </Border>
-
-            <!-- Последние выполненные цели -->
             <Border Style="{StaticResource CardStyle}" 
                     Background="{StaticResource CardBrush}"
                     Padding="20">
@@ -315,7 +286,6 @@
                              FontSize="18" 
                              FontWeight="SemiBold"
                              Margin="0,0,0,15"/>
-
                     <ItemsControl x:Name="RecentCompletedGoals">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -329,7 +299,6 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-
                                         <Border Grid.Column="0"
                                                 Width="32"
                                                 Height="32"
@@ -341,7 +310,6 @@
                                                      HorizontalAlignment="Center"
                                                      VerticalAlignment="Center"/>
                                         </Border>
-
                                         <StackPanel Grid.Column="1"
                                                   VerticalAlignment="Center">
                                             <TextBlock Text="{Binding Name}" 
@@ -364,8 +332,6 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-                    <!-- Сообщение, если нет выполненных целей -->
                     <TextBlock x:Name="NoCompletedGoalsMessage" 
                              Text="Пока нет выполненных целей. Двигайтесь к своим целям!" 
                              Foreground="{StaticResource TextSecondaryBrush}"
