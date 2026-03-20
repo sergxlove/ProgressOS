@@ -5,8 +5,376 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProgressOS.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="800" d:DesignWidth="1200"
+             Background="Transparent">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  PanningMode="VerticalOnly">
+        <StackPanel Margin="0,0,20,20">
+            <!-- Верхняя панель с приветствием и датой -->
+            <Grid Margin="0,0,0,30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock x:Name="GreetingText" 
+                             Text="Доброе утро, Александр! 👋" 
+                             Foreground="{StaticResource TextPrimaryBrush}" 
+                             FontSize="28" 
+                             FontWeight="Bold"/>
+                    <TextBlock Text="Вот ваш прогресс за сегодня" 
+                             Foreground="{StaticResource TextSecondaryBrush}" 
+                             FontSize="14"
+                             Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <Border Grid.Column="1"
+                        Background="{StaticResource CardBrush}"
+                        CornerRadius="16"
+                        Padding="15,8">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="📅" FontSize="18" Margin="0,0,8,0"/>
+                        <StackPanel>
+                            <TextBlock x:Name="CurrentDateText" 
+                                     Text="20 марта 2024" 
+                                     Foreground="{StaticResource TextPrimaryBrush}" 
+                                     FontSize="13" 
+                                     FontWeight="SemiBold"/>
+                            <TextBlock x:Name="CurrentDayText" 
+                                     Text="Среда" 
+                                     Foreground="{StaticResource TextSecondaryBrush}" 
+                                     FontSize="11"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Основные метрики в реальном времени -->
+            <Grid Margin="0,0,0,30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Метрика: Всего целей -->
+                <Border Grid.Column="0"
+                        Style="{StaticResource CardStyle}"
+                        Background="{StaticResource CardBrush}"
+                        Margin="0,0,10,0"
+                        Padding="15">
+                    <StackPanel>
+                        <TextBlock Text="📊" FontSize="20" Margin="0,0,0,8"/>
+                        <TextBlock Text="Всего целей" 
+                                 Foreground="{StaticResource TextSecondaryBrush}" 
+                                 FontSize="11"/>
+                        <TextBlock x:Name="TotalGoalsText" 
+                                 Text="0" 
+                                 Foreground="{StaticResource TextPrimaryBrush}" 
+                                 FontSize="28" 
+                                 FontWeight="Bold"
+                                 Margin="0,5,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock x:Name="DailyCountText" 
+                                     Text="0" 
+                                     Foreground="#4CAF50" 
+                                     FontSize="10"/>
+                            <TextBlock Text="ежедневных" 
+                                     Foreground="{StaticResource TextSecondaryBrush}" 
+                                     FontSize="10"
+                                     Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="YearlyCountText" 
+                                     Text="0" 
+                                     Foreground="#FFA726" 
+                                     FontSize="10"/>
+                            <TextBlock Text="годовых" 
+                                     Foreground="{StaticResource TextSecondaryBrush}" 
+                                     FontSize="10"
+                                     Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Метрика: В процессе -->
+                <Border Grid.Column="1"
+                        Style="{StaticResource CardStyle}"
+                        Background="{StaticResource CardBrush}"
+                        Margin="5,0"
+                        Padding="15">
+                    <StackPanel>
+                        <TextBlock Text="⚡" FontSize="20" Margin="0,0,0,8"/>
+                        <TextBlock Text="В процессе" 
+                                 Foreground="{StaticResource TextSecondaryBrush}" 
+                                 FontSize="11"/>
+                        <TextBlock x:Name="InProgressText" 
+                                 Text="0" 
+                                 Foreground="#FFA726" 
+                                 FontSize="28" 
+                                 FontWeight="Bold"
+                                 Margin="0,5,0,0"/>
+                        <ProgressBar x:Name="InProgressBar" 
+                                   Style="{StaticResource ProgressBarStyle}" 
+                                   Value="0" 
+                                   Height="3"
+                                   Foreground="#FFA726"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Метрика: Выполнено -->
+                <Border Grid.Column="2"
+                        Style="{StaticResource CardStyle}"
+                        Background="{StaticResource CardBrush}"
+                        Margin="5,0"
+                        Padding="15">
+                    <StackPanel>
+                        <TextBlock Text="✅" FontSize="20" Margin="0,0,0,8"/>
+                        <TextBlock Text="Выполнено" 
+                                 Foreground="{StaticResource TextSecondaryBrush}" 
+                                 FontSize="11"/>
+                        <TextBlock x:Name="CompletedText" 
+                                 Text="0" 
+                                 Foreground="#4CAF50" 
+                                 FontSize="28" 
+                                 FontWeight="Bold"
+                                 Margin="0,5,0,0"/>
+                        <TextBlock x:Name="CompletionRateText" 
+                                 Text="0% от всех целей" 
+                                 Foreground="{StaticResource TextSecondaryBrush}" 
+                                 FontSize="10"
+                                 Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Метрика: Средний прогресс -->
+                <Border Grid.Column="3"
+                        Style="{StaticResource CardStyle}"
+                        Background="{StaticResource CardBrush}"
+                        Margin="10,0,0,0"
+                        Padding="15">
+                    <StackPanel>
+                        <TextBlock Text="🎯" FontSize="20" Margin="0,0,0,8"/>
+                        <TextBlock Text="Средний прогресс" 
+                                 Foreground="{StaticResource TextSecondaryBrush}" 
+                                 FontSize="11"/>
+                        <TextBlock x:Name="AverageProgressText" 
+                                 Text="0%" 
+                                 Foreground="{StaticResource PrimaryBrush}" 
+                                 FontSize="28" 
+                                 FontWeight="Bold"
+                                 Margin="0,5,0,0"/>
+                        <ProgressBar x:Name="AverageProgressBar" 
+                                   Style="{StaticResource ProgressBarStyle}" 
+                                   Value="0" 
+                                   Height="3"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Список активных целей -->
+            <Border Style="{StaticResource CardStyle}" 
+                    Background="{StaticResource CardBrush}"
+                    Margin="0,0,0,25"
+                    Padding="20">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" 
+                              HorizontalAlignment="Left"
+                              Margin="0,0,0,15">
+                        <TextBlock Text="🔥 Активные цели" 
+                                 Foreground="{StaticResource TextPrimaryBrush}" 
+                                 FontSize="18" 
+                                 FontWeight="SemiBold"/>
+                        <Border Background="{StaticResource PrimaryBrush}"
+                                CornerRadius="10"
+                                Padding="6,3"
+                                Margin="12,0,0,0">
+                            <TextBlock x:Name="ActiveGoalsCount" 
+                                     Text="0" 
+                                     Foreground="White" 
+                                     FontSize="11"
+                                     FontWeight="Bold"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Список активных целей -->
+                    <ItemsControl x:Name="ActiveGoalsList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#2A2A2A"
+                                        CornerRadius="12"
+                                        Padding="15"
+                                        Margin="0,0,0,8">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Иконка типа цели -->
+                                        <Border Grid.Column="0"
+                                                Width="40"
+                                                Height="40"
+                                                CornerRadius="10"
+                                                Background="{Binding TypeColor}"
+                                                Margin="0,0,12,0">
+                                            <TextBlock Text="{Binding Icon}" 
+                                                     FontSize="20"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <!-- Информация о цели -->
+                                        <StackPanel Grid.Column="1"
+                                                  Grid.Row="0"
+                                                  VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}" 
+                                                     Foreground="White" 
+                                                     FontSize="14" 
+                                                     FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding Description}" 
+                                                     Foreground="{StaticResource TextSecondaryBrush}" 
+                                                     FontSize="11"
+                                                     Margin="0,3,0,0"
+                                                     TextWrapping="Wrap"/>
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <Border Background="#2A2A2A"
+                                                        CornerRadius="8"
+                                                        Padding="6,2">
+                                                    <TextBlock Text="{Binding Type}" 
+                                                             Foreground="{Binding TypeColorBrush}" 
+                                                             FontSize="10"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding DateCreate}" 
+                                                         Foreground="{StaticResource TextSecondaryBrush}" 
+                                                         FontSize="9"
+                                                         Margin="8,0,0,0"
+                                                         VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Прогресс -->
+                                        <StackPanel Grid.Column="2"
+                                                  Grid.Row="0"
+                                                  HorizontalAlignment="Right">
+                                            <TextBlock Text="{Binding ProgressPercent}" 
+                                                     Foreground="{Binding ProgressColor}" 
+                                                     FontSize="16" 
+                                                     FontWeight="Bold"
+                                                     HorizontalAlignment="Right"/>
+                                            <TextBlock Text="{Binding ProgressText}" 
+                                                     Foreground="{StaticResource TextSecondaryBrush}" 
+                                                     FontSize="10"/>
+                                        </StackPanel>
+
+                                        <!-- Прогресс бар -->
+                                        <Grid Grid.Column="1"
+                                              Grid.ColumnSpan="2"
+                                              Grid.Row="1"
+                                              Margin="52,10,0,0">
+                                            <ProgressBar Style="{StaticResource ProgressBarStyle}" 
+                                                       Value="{Binding ProgressValue}" 
+                                                       Height="4"
+                                                       Foreground="{Binding ProgressColor}"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Сообщение, если нет активных целей -->
+                    <TextBlock x:Name="NoActiveGoalsMessage" 
+                             Text="Нет активных целей. Создайте свою первую цель!" 
+                             Foreground="{StaticResource TextSecondaryBrush}"
+                             FontSize="12"
+                             HorizontalAlignment="Center"
+                             Margin="0,15,0,0"
+                             Visibility="Collapsed"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Последние выполненные цели -->
+            <Border Style="{StaticResource CardStyle}" 
+                    Background="{StaticResource CardBrush}"
+                    Padding="20">
+                <StackPanel>
+                    <TextBlock Text="✅ Недавние достижения" 
+                             Foreground="{StaticResource TextPrimaryBrush}" 
+                             FontSize="18" 
+                             FontWeight="SemiBold"
+                             Margin="0,0,0,15"/>
+
+                    <ItemsControl x:Name="RecentCompletedGoals">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#2A2A2A"
+                                        CornerRadius="10"
+                                        Padding="12"
+                                        Margin="0,0,0,8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                CornerRadius="8"
+                                                Background="#4CAF50"
+                                                Margin="0,0,12,0">
+                                            <TextBlock Text="🏆" 
+                                                     FontSize="16"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <StackPanel Grid.Column="1"
+                                                  VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}" 
+                                                     Foreground="White" 
+                                                     FontSize="13" 
+                                                     FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding Description}" 
+                                                     Foreground="{StaticResource TextSecondaryBrush}" 
+                                                     FontSize="11"
+                                                     Margin="0,3,0,0"/>
+                                        </StackPanel>
+
+                                        <TextBlock Grid.Column="2"
+                                                 Text="{Binding CompletedDate}"
+                                                 Foreground="{StaticResource TextSecondaryBrush}"
+                                                 FontSize="10"
+                                                 VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Сообщение, если нет выполненных целей -->
+                    <TextBlock x:Name="NoCompletedGoalsMessage" 
+                             Text="Пока нет выполненных целей. Двигайтесь к своим целям!" 
+                             Foreground="{StaticResource TextSecondaryBrush}"
+                             FontSize="12"
+                             HorizontalAlignment="Center"
+                             Margin="0,15,0,0"
+                             Visibility="Collapsed"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
