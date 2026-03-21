@@ -13,6 +13,7 @@ namespace ProgressOS.DataAccess.Sqlite
 
         public DbSet<GoalsDayEntity> GoalsDayTable { get; set; }
         public DbSet<GoalsYearEntity> GoalsYearTable { get; set; }
+        public DbSet<NotesEntity> NotesTable { get; set; }
         public DbSet<UsersEntity> UsersTable { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

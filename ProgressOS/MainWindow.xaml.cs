@@ -1,15 +1,17 @@
-﻿using ProgressOS.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ProgressOS.Application.Abstractions;
+using ProgressOS.Application.Services;
+using ProgressOS.Core.Abstractions;
+using ProgressOS.Core.Services;
+using ProgressOS.DataAccess.Sqlite;
+using ProgressOS.DataAccess.Sqlite.Abstractions;
+using ProgressOS.DataAccess.Sqlite.Repositories;
+using ProgressOS.Enums;
 using ProgressOS.Pages;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ProgressOS
 {
@@ -24,6 +26,7 @@ namespace ProgressOS
         private SettingsPage _settingPage;
         private VariablePage _currentPage;
         private Button? _activeButton;
+        private ServiceProvider _provider;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,6 +34,20 @@ namespace ProgressOS
             _goalsYearPages = new GoalsYearPage();
             _mainPage = new MainPages();
             _settingPage = new SettingsPage();
+            ServiceCollection serviceCollection = new();
+            serviceCollection.AddDbContext<ProgressOSDbContext>(opt =>
+                opt.UseSqlite("Data Source=D:\\projects\\projects\\ProgressOS\\data.db"));
+            serviceCollection.AddScoped<IGoalsDayRepository, GoalsDayRepository>();
+            serviceCollection.AddScoped<IGoalsYearRepository, GoalsYearRepository>();
+            serviceCollection.AddScoped<INotesRepository, NotesRepository>();
+            serviceCollection.AddScoped<IUsersRepository, UsersRepository>();
+            serviceCollection.AddScoped<IGoalsDayService, GoalsDayService>();
+            serviceCollection.AddScoped<IGoalsYearService, GoalsYearService>();
+            serviceCollection.AddScoped<INotesService, NotesService>();
+            serviceCollection.AddScoped<IUsersService, UsersService>();
+            serviceCollection.AddScoped<IEncryptionService, EncryptionService>();
+            serviceCollection.AddScoped<IPasswordHasherService, PasswordHasherService>();
+            _provider = serviceCollection.BuildServiceProvider();
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)

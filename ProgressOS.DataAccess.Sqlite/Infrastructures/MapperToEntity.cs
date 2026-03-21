@@ -44,6 +44,19 @@ namespace ProgressOS.DataAccess.Sqlite.Infrastructures
             return result;
         }
 
+        public static NotesEntity ToNotesEntity(Notes note)
+        {
+            NotesEntity result = new()
+            {
+                Id = note.Id.ToString(),
+                Title = note.Title,
+                Description = note.Description,
+                DateCreate = note.DateCreate.ToString(),
+                DateUpdate = note.DateUpdate.ToString()
+            };
+            return result;
+        }
+
         public static Users FromUsersEntity(UsersEntity user)
         {
             ResultCreateModel<Users> result = Users.Create(Guid.Parse(user.Id), user.Nickname);
@@ -66,6 +79,14 @@ namespace ProgressOS.DataAccess.Sqlite.Infrastructures
                 goalYear.Description, Convert.ToInt32(goalYear.CurrentProgress),
                 Convert.ToInt32(goalYear.TotalProgress), DateOnly.Parse(goalYear.DateCreate));
             if (result.IsSuccess) return result.Value;
+            throw new Exception(result.Error);
+        }
+
+        public static Notes FromNotesEntity(NotesEntity note)
+        {
+            ResultCreateModel<Notes> result = Notes.Create(Guid.Parse(note.Id), note.Title,
+                note.Description, DateTime.Parse(note.DateCreate), DateTime.Parse(note.DateUpdate));
+            if(result.IsSuccess) return result.Value;
             throw new Exception(result.Error);
         }
     }
