@@ -4,21 +4,19 @@ using ProgressOS.DataAccess.Sqlite.Models;
 
 namespace ProgressOS.DataAccess.Sqlite.Configurations
 {
-    public class GoalsYearConfiguration : IEntityTypeConfiguration<GoalsYearEntity>
+    public class NotesConfiguration : IEntityTypeConfiguration<NotesEntity>
     {
-        public void Configure(EntityTypeBuilder<GoalsYearEntity> builder)
+        public void Configure(EntityTypeBuilder<NotesEntity> builder)
         {
-            builder.ToTable("goalsYear");
+            builder.ToTable("notes");
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.Name)
+            builder.Property(a => a.Title)
                 .IsRequired();
             builder.Property(a => a.Description)
                 .IsRequired();
-            builder.Property(a => a.CurrentProgress)
-                .IsRequired();
-            builder.Property(a => a.TotalProgress)
-                .IsRequired();
             builder.Property(a => a.DateCreate)
+                .IsRequired();
+            builder.Property(a => a.DateUpdate)
                 .IsRequired();
         }
     }

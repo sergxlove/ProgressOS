@@ -8,7 +8,10 @@ namespace ProgressOS.DataAccess.Sqlite.Configurations
     {
         public void Configure(EntityTypeBuilder<UsersEntity> builder)
         {
-            throw new NotImplementedException();
+            builder.ToTable("users");
+            builder.HasKey(a => a.Id);
+            builder.Property(a => a.Nickname)
+                .IsRequired();
         }
     }
 }

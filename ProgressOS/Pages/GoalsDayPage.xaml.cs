@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ProgressOS.Pages
 {
@@ -21,6 +11,46 @@ namespace ProgressOS.Pages
         public GoalsDayPages()
         {
             InitializeComponent();
+        }
+
+        private void AddGoal_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditGoal_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteGoal_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UpdateProgress_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelDialog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveGoal_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void CancelProgressDialog_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void SaveProgress_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
