@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ProgressOS.Pages
 {
@@ -21,6 +12,46 @@ namespace ProgressOS.Pages
         public NotesPage()
         {
             InitializeComponent();
+        }
+
+        private void AddNote_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditNote_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteNote_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelDialog_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void SaveNote_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NoteCard_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void CloseViewDialog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditFromView_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

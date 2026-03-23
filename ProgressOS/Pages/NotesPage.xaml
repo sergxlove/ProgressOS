@@ -5,8 +5,240 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProgressOS.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="1200"
+             Background="Transparent">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" 
+                Background="Transparent"
+                Margin="0,0,0,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Заметки" 
+                             Foreground="{StaticResource TextPrimaryBrush}" 
+                             FontSize="28" 
+                             FontWeight="Bold"/>
+                    <TextBlock Text="Создавайте и сохраняйте важные мысли, идеи и заметки" 
+                             Foreground="{StaticResource TextSecondaryBrush}" 
+                             FontSize="14"
+                             Margin="0,5,0,0"/>
+                </StackPanel>
+                <Button Grid.Column="1"
+                        Style="{StaticResource RoundedButton}"
+                        Padding="20,12"
+                        Click="AddNote_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="+" FontSize="18" FontWeight="Bold" Margin="0,0,8,0"/>
+                        <TextBlock Text="Новая заметка" FontSize="14" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <ScrollViewer Grid.Row="1" 
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <ItemsControl x:Name="NotesList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource NoteCardStyle}"
+                                    MouseLeftButtonDown="NoteCard_Click"
+                                    Tag="{Binding}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Text="{Binding Title}" 
+                                                 Foreground="{StaticResource TextPrimaryBrush}" 
+                                                 FontSize="18" 
+                                                 FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding DateCreate}" 
+                                                 Foreground="{StaticResource TextSecondaryBrush}" 
+                                                 FontSize="11"
+                                                 Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="1" 
+                                              Orientation="Horizontal">
+                                        <Button Style="{StaticResource ActionButtonStyle}"
+                                                Click="EditNote_Click"
+                                                Tag="{Binding}">
+                                            <TextBlock Text="✏️" FontSize="16"/>
+                                        </Button>
+                                        <Button Style="{StaticResource ActionButtonStyle}"
+                                                Click="DeleteNote_Click"
+                                                Tag="{Binding}"
+                                                Margin="5,0,0,0">
+                                            <TextBlock Text="🗑️" FontSize="16"/>
+                                        </Button>
+                                    </StackPanel>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                             Text="{Binding ContentPreview}" 
+                                             Foreground="{StaticResource TextSecondaryBrush}" 
+                                             FontSize="13"
+                                             TextWrapping="Wrap"
+                                             Margin="0,10,0,0"
+                                             MaxHeight="60"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Border x:Name="NoNotesMessage"
+                        Style="{StaticResource CardStyle}"
+                        Background="{StaticResource CardBrush}"
+                        Padding="40"
+                        Margin="0,20,0,0"
+                        Visibility="Collapsed">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="📝" FontSize="48" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Нет заметок" 
+                                 Foreground="{StaticResource TextPrimaryBrush}" 
+                                 FontSize="18" 
+                                 FontWeight="SemiBold"
+                                 HorizontalAlignment="Center"
+                                 Margin="0,15,0,5"/>
+                        <TextBlock Text="Создайте свою первую заметку, чтобы сохранить важные идеи" 
+                                 Foreground="{StaticResource TextSecondaryBrush}" 
+                                 FontSize="13"
+                                 HorizontalAlignment="Center"
+                                 TextWrapping="Wrap"/>
+                        <Button Style="{StaticResource RoundedButton}"
+                                Padding="20,10"
+                                Margin="0,20,0,0"
+                                Click="AddNote_Click">
+                            <TextBlock Text="➕ Создать заметку" 
+                                     FontSize="14"
+                                     FontWeight="SemiBold"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+        <Border x:Name="NoteDialog" 
+                Background="#80000000"
+                Visibility="Collapsed"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <Border Style="{StaticResource CardStyle}"
+                    Background="{StaticResource SurfaceBrush}"
+                    Width="600"
+                    Height="Auto"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                <StackPanel Margin="25">
+                    <TextBlock x:Name="DialogTitle" 
+                             Text="Новая заметка" 
+                             Foreground="{StaticResource TextPrimaryBrush}" 
+                             FontSize="20" 
+                             FontWeight="Bold"
+                             Margin="0,0,0,20"/>
+                    <TextBlock Text="Название" 
+                             Foreground="{StaticResource TextSecondaryBrush}" 
+                             FontSize="12"
+                             Margin="0,0,0,5"/>
+                    <TextBox x:Name="NoteTitleTextBox" 
+                            Style="{StaticResource RoundedTextBox}"
+                            Margin="0,0,0,15"/>
+                    <TextBlock Text="Содержимое" 
+                             Foreground="{StaticResource TextSecondaryBrush}" 
+                             FontSize="12"
+                             Margin="0,0,0,5"/>
+                    <TextBox x:Name="NoteContentTextBox" 
+                            Style="{StaticResource RoundedTextArea}"
+                            Height="300"
+                            Margin="0,0,0,15"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource CancelButtonStyle}"
+                                Click="CancelDialog_Click">
+                            <TextBlock Text="Отмена" 
+                                     Foreground="{StaticResource TextSecondaryBrush}" 
+                                     FontSize="14"/>
+                        </Button>
+                        <Button Style="{StaticResource RoundedButton}"
+                                Padding="20,10"
+                                Margin="10,0,0,0"
+                                Click="SaveNote_Click">
+                            <TextBlock Text="Сохранить" 
+                                     FontSize="14"
+                                     FontWeight="SemiBold"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Border>
+        <Border x:Name="ViewDialog" 
+                Background="#80000000"
+                Visibility="Collapsed"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <Border Style="{StaticResource CardStyle}"
+                    Background="{StaticResource SurfaceBrush}"
+                    Width="700"
+                    Height="Auto"
+                    MaxHeight="600"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                <Grid Margin="25">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="ViewTitle" 
+                             Foreground="{StaticResource TextPrimaryBrush}" 
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Margin="0,0,0,10"/>
+                    <TextBlock x:Name="ViewDate" 
+                             Foreground="{StaticResource TextSecondaryBrush}" 
+                             FontSize="12"
+                             Grid.Row="1"
+                             Margin="0,0,0,20"/>
+                    <ScrollViewer Grid.Row="2" 
+                                VerticalScrollBarVisibility="Auto"
+                                MaxHeight="400">
+                        <TextBlock x:Name="ViewContent" 
+                                 Foreground="{StaticResource TextPrimaryBrush}" 
+                                 FontSize="14"
+                                 TextWrapping="Wrap"/>
+                    </ScrollViewer>
+                    <StackPanel Grid.Row="3" 
+                              Orientation="Horizontal" 
+                              HorizontalAlignment="Right"
+                              Margin="0,20,0,0">
+                        <Button Style="{StaticResource CancelButtonStyle}"
+                                Click="CloseViewDialog_Click">
+                            <TextBlock Text="Закрыть" 
+                                     Foreground="{StaticResource TextSecondaryBrush}" 
+                                     FontSize="14"/>
+                        </Button>
+                        <Button x:Name="EditFromViewButton"
+                                Style="{StaticResource RoundedButton}"
+                                Padding="20,10"
+                                Margin="10,0,0,0"
+                                Click="EditFromView_Click">
+                            <TextBlock Text="Редактировать" 
+                                     FontSize="14"
+                                     FontWeight="SemiBold"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
     </Grid>
 </UserControl>

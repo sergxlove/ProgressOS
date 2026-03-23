@@ -8,116 +8,12 @@
              d:DesignHeight="800" d:DesignWidth="1200"
              Background="Transparent">
 
-    <UserControl.Resources>
-        <!-- Стиль для скругленных TextBox -->
-        <Style x:Key="RoundedTextBox" TargetType="TextBox">
-            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="12"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="8"
-                                BorderThickness="0">
-                            <ScrollViewer x:Name="PART_ContentHost" 
-                                         Margin="{TemplateBinding Padding}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Стиль для скругленных кнопок -->
-        <Style x:Key="RoundedButton" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="8"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                            VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Стиль для кнопок действий (редактирование, удаление) -->
-        <Style x:Key="ActionButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="6">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                            VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#33FFFFFF"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Стиль для кнопки отмены -->
-        <Style x:Key="CancelButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Padding" Value="20,10"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                            VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#33FFFFFF"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-
-    <!-- Здесь был Grid, который теперь обернут в корневой элемент -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Верхняя панель с заголовком и кнопкой добавления -->
         <Border Grid.Row="0" 
                 Background="Transparent"
                 Margin="0,0,0,20">
@@ -149,13 +45,10 @@
                 </Button>
             </Grid>
         </Border>
-
-        <!-- Основной контент - список целей -->
         <ScrollViewer Grid.Row="1" 
                      VerticalScrollBarVisibility="Auto"
                      HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
-                <!-- Список целей -->
                 <ItemsControl x:Name="GoalsList">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -173,8 +66,6 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-
-                                    <!-- Заголовок цели -->
                                     <StackPanel Grid.Row="0" Grid.Column="0">
                                         <TextBlock Text="{Binding Name}" 
                                                  Foreground="{StaticResource TextPrimaryBrush}" 
@@ -185,8 +76,6 @@
                                                  FontSize="11"
                                                  Margin="0,5,0,0"/>
                                     </StackPanel>
-
-                                    <!-- Кнопки действий -->
                                     <StackPanel Grid.Row="0" Grid.Column="1" 
                                               Orientation="Horizontal">
                                         <Button Style="{StaticResource ActionButtonStyle}"
@@ -201,22 +90,17 @@
                                             <TextBlock Text="🗑️" FontSize="16"/>
                                         </Button>
                                     </StackPanel>
-
-                                    <!-- Описание -->
                                     <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                              Text="{Binding Description}" 
                                              Foreground="{StaticResource TextSecondaryBrush}" 
                                              FontSize="13"
                                              TextWrapping="Wrap"
                                              Margin="0,10,0,10"/>
-
-                                    <!-- Прогресс -->
                                     <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-
                                         <StackPanel Grid.Column="0">
                                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                                 <TextBlock Text="Прогресс: " 
@@ -237,7 +121,6 @@
                                                        Value="{Binding ProgressPercent}" 
                                                        Height="6"/>
                                         </StackPanel>
-
                                         <Button Grid.Column="1"
                                                 Style="{StaticResource RoundedButton}"
                                                 Padding="15,8"
@@ -254,8 +137,6 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-
-                <!-- Сообщение, если нет целей -->
                 <Border x:Name="NoGoalsMessage"
                         Style="{StaticResource CardStyle}"
                         Background="{StaticResource CardBrush}"
@@ -287,8 +168,6 @@
                 </Border>
             </StackPanel>
         </ScrollViewer>
-
-        <!-- Диалог добавления/редактирования цели -->
         <Border x:Name="GoalDialog" 
                 Background="#80000000"
                 Visibility="Collapsed"
@@ -307,8 +186,6 @@
                              FontSize="20" 
                              FontWeight="Bold"
                              Margin="0,0,0,20"/>
-
-                    <!-- Название цели -->
                     <TextBlock Text="Название цели" 
                              Foreground="{StaticResource TextSecondaryBrush}" 
                              FontSize="12"
@@ -316,8 +193,6 @@
                     <TextBox x:Name="GoalNameTextBox" 
                             Style="{StaticResource RoundedTextBox}"
                             Margin="0,0,0,15"/>
-
-                    <!-- Описание -->
                     <TextBlock Text="Описание" 
                              Foreground="{StaticResource TextSecondaryBrush}" 
                              FontSize="12"
@@ -328,8 +203,6 @@
                             TextWrapping="Wrap"
                             AcceptsReturn="True"
                             Margin="0,0,0,15"/>
-
-                    <!-- Прогресс -->
                     <Grid Margin="0,0,0,15">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -354,8 +227,6 @@
                                     Style="{StaticResource RoundedTextBox}"/>
                         </StackPanel>
                     </Grid>
-
-                    <!-- Кнопки -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Style="{StaticResource CancelButtonStyle}"
                                 Click="CancelDialog_Click">
@@ -375,8 +246,6 @@
                 </StackPanel>
             </Border>
         </Border>
-
-        <!-- Диалог обновления прогресса -->
         <Border x:Name="ProgressDialog" 
                 Background="#80000000"
                 Visibility="Collapsed"
