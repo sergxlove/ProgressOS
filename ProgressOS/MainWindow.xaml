@@ -204,6 +204,21 @@
                                     </Button.ContentTemplate>
                                 </Button>
 
+                                <Button x:Name="NotesButton" 
+                                        Style="{StaticResource NavButtonStyle}"
+                                        Content="Заметки"
+                                        Tag="Notes"
+                                        Click="NavigateNotes_Click">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="🎯" FontSize="20"/>
+                                                <TextBlock Text="{Binding}" Margin="12,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+
                                 <Button x:Name="SettingsButton" 
                                        Style="{StaticResource NavButtonStyle}"
                                        Content="Настройки"

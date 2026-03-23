@@ -24,6 +24,7 @@ namespace ProgressOS
         private GoalsYearPage _goalsYearPages;
         private MainPages _mainPage;
         private SettingsPage _settingPage;
+        private NotesPage _notesPage;
         private VariablePage _currentPage;
         private Button? _activeButton;
         private ServiceProvider _provider;
@@ -34,6 +35,7 @@ namespace ProgressOS
             _goalsYearPages = new GoalsYearPage();
             _mainPage = new MainPages();
             _settingPage = new SettingsPage();
+            _notesPage = new NotesPage();
             ServiceCollection serviceCollection = new();
             serviceCollection.AddDbContext<ProgressOSDbContext>(opt =>
                 opt.UseSqlite("Data Source=D:\\projects\\projects\\ProgressOS\\data.db"));
@@ -106,6 +108,16 @@ namespace ProgressOS
             }
         }
 
+        private void NavigateNotes_Click(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button button)
+            {
+                _currentPage = VariablePage.Notes;
+                NavigateToPage();
+                SetActiveButton(button);
+            }
+        }
+
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -126,6 +138,9 @@ namespace ProgressOS
                     break;
                 case VariablePage.Settings:
                     PageControl.Content = _settingPage;
+                    break;
+                case VariablePage.Notes:
+                    PageControl.Content = _notesPage;
                     break;
                 default:
                     PageControl.Content = _mainPage;
